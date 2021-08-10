@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "dinoeatlife-ionic-react",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
