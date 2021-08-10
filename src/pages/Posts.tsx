@@ -8,12 +8,13 @@ const Posts: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const posts = await getPosts();
-      setPosts(posts);
-      setLoading(false);
-    })();
+    setLoading(true);
+    getPosts()
+      .then((posts) => {
+        setPosts(posts);
+        setLoading(false);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (
