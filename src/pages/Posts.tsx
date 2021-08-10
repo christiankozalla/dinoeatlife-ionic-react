@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import { getPosts } from '../api/api';
 import './Posts.css';
 
+// Types
+import { Post } from '../models/post';
+
 const Posts: React.FC = () => {
-  const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
