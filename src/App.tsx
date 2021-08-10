@@ -33,40 +33,45 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* Global State Provider */
+import { AppContextProvider } from './State';
+
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path='/home'>
-            <Home />
-          </Route>
-          <Route exact path='/posts'>
-            <Posts />
-          </Route>
-          <Route path='/lists'>
-            <Lists />
-          </Route>
-          <Route exact path='/'>
-            <Redirect to='/home' />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot='bottom'>
-          <IonTabButton tab='home' href='/home'>
-            <IonIcon icon={homeOutline} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab='posts' href='/posts'>
-            <IonIcon icon={leafOutline} />
-            <IonLabel>Posts</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab='lists' href='/lists'>
-            <IonIcon icon={cartOutline} />
-            <IonLabel>Shopping List</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+    <AppContextProvider>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path='/home'>
+              <Home />
+            </Route>
+            <Route exact path='/posts'>
+              <Posts />
+            </Route>
+            <Route path='/lists'>
+              <Lists />
+            </Route>
+            <Route exact path='/'>
+              <Redirect to='/home' />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot='bottom'>
+            <IonTabButton tab='home' href='/home'>
+              <IonIcon icon={homeOutline} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab='posts' href='/posts'>
+              <IonIcon icon={leafOutline} />
+              <IonLabel>Posts</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab='lists' href='/lists'>
+              <IonIcon icon={cartOutline} />
+              <IonLabel>Shopping List</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </AppContextProvider>
   </IonApp>
 );
 
