@@ -2,12 +2,15 @@ import React, { createContext, useReducer } from 'react';
 
 /* Types */
 import { Home } from './models/home'; // includes home.recipes, home.posts, home.ingredients
-import { Post } from './models/post';
+import { Profile } from './models/profile'; // includes user.profile
 import { User } from './models/user'; // includes user.profile
 
 interface State {
   home: Home | null;
   user: User | null;
+  global: {
+    profiles: Profile[];
+  };
 }
 
 type Reducer = (state: State, action: any) => State;
@@ -15,10 +18,13 @@ type Reducer = (state: State, action: any) => State;
 const initialState: State = {
   home: null,
   user: null,
+  global: {
+    profiles: [],
+  },
 };
 
 interface Action {
-  type: 'setPosts';
+  type: 'setPosts' | 'setProfile';
   payload: object;
 }
 
@@ -36,6 +42,22 @@ const reducer: Reducer = (state: State, action: any) => {
           posts: action.payload,
         },
       };
+    }
+    case 'setProfile': {
+      const isProfileUnique = !state.global.profiles.some(
+        ({ userId }) => userId === action.payload.userId
+      );
+
+      if (isProfileUnique) {
+        return {
+          ...state,
+          global: {
+            profiles: [...state.global.profiles, action.payload as Profile],
+          },
+        };
+      } else {
+        return state;
+      }
     }
     default:
       return state;

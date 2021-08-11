@@ -1,4 +1,7 @@
+import { User } from './user';
+
 export interface Profile {
+  userId: User['id'];
   name: string;
   bio?: string;
   city?: string;
