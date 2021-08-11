@@ -28,24 +28,31 @@ interface Action {
 // }
 
 const reducer: Reducer = (state: State, action: any) => {
-  console.log('%cPrevious State:', 'color: #9E9E9E; font-weight: 700;', state);
-  console.log('%cAction:', 'color: #00A7F7; font-weight: 700;', action);
-
   switch (action.type) {
     case 'setPosts': {
-      const newState = {
+      return {
         ...state,
         home: {
           posts: action.payload,
         },
       };
-      console.log('%cNext State:', 'color: #47B04B; font-weight: 700;', newState);
-      return newState;
     }
     default:
       return state;
   }
 };
+
+const logger = (reducer: Reducer) => {
+  const reducerWithLogger = (state: State, action: any) => {
+    console.log('%cPrevious State:', 'color: #9E9E9E; font-weight: 700;', state);
+    console.log('%cAction:', 'color: #00A7F7; font-weight: 700;', action);
+    console.log('%cNext State:', 'color: #47B04B; font-weight: 700;', reducer(state, action));
+    return reducer(state, action);
+  };
+  return reducerWithLogger;
+};
+
+const loggerReducer = logger(reducer);
 
 let AppContext = createContext({
   state: { ...initialState },
@@ -57,7 +64,7 @@ const AppContextProvider: React.FC = (props) => {
     ...initialState,
   };
 
-  let [state, dispatch] = useReducer(reducer, fullInitialState);
+  let [state, dispatch] = useReducer(loggerReducer, fullInitialState);
 
   let value = { state, dispatch };
   return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
